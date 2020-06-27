@@ -7,13 +7,13 @@ using System.Windows;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("api_test")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("光顾着写了谁知道描述是啥")]
+[assembly: AssemblyDescription("光顾着写了谁知道说明是啥")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("HP Inc.")]
-[assembly: AssemblyProduct("api_test")]
-[assembly: AssemblyCopyright("Copyright © HP Inc. 2020")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("光顾着写了谁知道公司是啥")]
+[assembly: AssemblyProduct("光顾着写了谁知道产品是啥")]
+[assembly: AssemblyCopyright("光顾着写了谁知道版权是啥")]
+[assembly: AssemblyTrademark("光顾着写了谁知道商标是啥")]
 [assembly: AssemblyCulture("")]
 
 // 将 ComVisible 设置为 false 会使此程序集中的类型

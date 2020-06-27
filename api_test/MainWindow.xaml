@@ -5,8 +5,79 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:api_test"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="API测试工具" Height="700" Width="1200">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+       <StackPanel>
+           <GroupBox Header="上传" Grid.Column="0">
+               <StackPanel>
+                   <StackPanel Orientation="Horizontal" Margin="5">
+                       <Label>服务器：</Label>
+                        <TextBox Width="200" Name="TbServer">http://127.0.0.1:5000/</TextBox>
+                   </StackPanel>
+                   <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label>用户名：</Label>
+                       <TextBox Width="200" Name="TbUser">amy</TextBox>
+                   </StackPanel>
+                   <StackPanel Orientation="Horizontal" Margin="5">
+                       <Label>密钥：</Label>
+                        <TextBox Width="200" Name="TbKey">123456sasd</TextBox>
+                   </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                       <Label>单词：</Label>
+                       <TextBox Width="200" Name="TbSendWord">word</TextBox>
+                   </StackPanel>
+                   <StackPanel Orientation="Horizontal" Margin="5">
+                       <Label>难度：</Label>
+                       <TextBox Width="200" Name="TbLevel">1</TextBox>
+                   </StackPanel>
+                   <StackPanel Orientation="Horizontal" Margin="5">
+                       <Button Width="100" Name="BtnSubmit" Click="BtnSubmit_OnClick">上传</Button>
+                   </StackPanel>
+               </StackPanel>
+           </GroupBox>
+           <GroupBox Header="返回值">
+               <StackPanel>
+                   <StackPanel Orientation="Horizontal" Margin="5">
+                       <Label>状态码：</Label>
+                       <TextBox Width="200" Name="TbCode"></TextBox>
+                   </StackPanel>
+                   <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label>返回单词：</Label>
+                       <TextBox Width="200" Name="TbReceiveWord"></TextBox>
+                   </StackPanel>
+                   <StackPanel Orientation="Horizontal" Margin="5">
+                       <Label>释义：</Label>
+                       <TextBox Width="200" Name="TbDescription"></TextBox>
+                   </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label>例句总数：</Label>
+                       <TextBox Width="200" Name="TbSentenceCount"></TextBox>
+                   </StackPanel>
+                </StackPanel>
+           </GroupBox>
+           <GroupBox Header="JSON视图">
+               <StackPanel>
+                    <Label>发送：</Label>
+                   <TextBox Name="TbSendJson" TextWrapping="Wrap" Height="100"></TextBox>
+                   <Label>接收：</Label>
+                   <TextBox Name="TbReceiveJson" TextWrapping="Wrap" Height="100"></TextBox>
+                </StackPanel>
+           </GroupBox>
+        </StackPanel>
+        <ListView Grid.Column="1" Name="LvSentence" Grid.ColumnSpan="2">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="英文" DisplayMemberBinding="{Binding Path=English}" Width="200"></GridViewColumn>
+                    <GridViewColumn Header="中文" DisplayMemberBinding="{Binding Path=Chinese}" Width="200"></GridViewColumn>
+                    <GridViewColumn Header="所属电影" DisplayMemberBinding="{Binding Path=Film}" Width="200"></GridViewColumn>
+                    <GridViewColumn Header="音频路径" DisplayMemberBinding="{Binding Path=Voice}" Width="200"></GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>
