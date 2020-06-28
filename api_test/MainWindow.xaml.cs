@@ -31,29 +31,40 @@ namespace api_test
 
         private void BtnSubmit_OnClick(object sender, RoutedEventArgs e)
         {
-            var send = new Send(TbUser.Text,TbKey.Text,TbSendWord.Text,Convert.ToInt32(TbLevel.Text), Convert.ToInt32(TbCount.Text));
-            var sendJson = JsonConvert.SerializeObject(send);
-            TbSendJson.Text = sendJson;
             try
             {
-                var receiveJson = SentData(TbServer.Text, sendJson);
-                JsonSerializerSettings setting = new JsonSerializerSettings();
-                setting.NullValueHandling = NullValueHandling.Ignore;
-                var Receive = JsonConvert.DeserializeObject<Receive>(receiveJson,setting);
-                TbReceiveWord.Text = Receive.Word;
-                TbCode.Text = Receive.StatueCode.ToString();
-                TbDescription.Text = Receive.Translate;
-                TbSentenceCount.Text = Receive.Sentences.Count.ToString();
-                TbReceiveJson.Text = receiveJson;
-                if (Receive.Sentences.Count != 0)
+                var send = new Send(TbUser.Text, TbKey.Text, TbSendWord.Text, Convert.ToInt32(TbLevel.Text), Convert.ToInt32(TbCount.Text));
+                var sendJson = JsonConvert.SerializeObject(send);
+                TbSendJson.Text = sendJson;
+                try
                 {
-                    LvSentence.ItemsSource = Receive.Sentences;
+                    var receiveJson = SentData(TbServer.Text, sendJson);
+                    JsonSerializerSettings setting = new JsonSerializerSettings();
+                    setting.NullValueHandling = NullValueHandling.Ignore;
+                    var Receive = JsonConvert.DeserializeObject<Receive>(receiveJson, setting);
+                    TbReceiveWord.Text = Receive.Word;
+                    TbCode.Text = Receive.StatueCode.ToString();
+                    TbDescription.Text = Receive.Translate;
+                    TbSentenceCount.Text = Receive.Sentences.Count.ToString();
+                    TbReceiveJson.Text = receiveJson;
+                    if (Receive.Sentences.Count != 0)
+                    {
+                        LvSentence.ItemsSource = Receive.Sentences;
+                    }
+                    else
+                    {
+                        LvSentence.ItemsSource = new List<Sentence>();
+                    }
                     LvSentence.UpdateLayout();
                 }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
             }
-            catch (Exception exception)
+            catch (FormatException ex)
             {
-                MessageBox.Show(exception.Message);
+                MessageBox.Show(ex.Message);
             }
         }
 
