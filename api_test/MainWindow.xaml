@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:api_test"
         mc:Ignorable="d"
-        Title="API测试工具" Height="750" Width="1200">
+        Title="API测试工具" Height="770" Width="1200">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -72,6 +72,11 @@
                    <TextBox Name="TbReceiveJson" TextWrapping="Wrap" Height="100"></TextBox>
                 </StackPanel>
            </GroupBox>
+           <StackPanel Orientation="Horizontal">
+                <Label>持续时间：</Label>
+               <Label Name="LbTime">0</Label>
+               <Label > ms</Label>
+            </StackPanel>
         </StackPanel>
         <ListView Grid.Column="1" Name="LvSentence" Grid.ColumnSpan="2">
             <ListView.View>

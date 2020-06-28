@@ -33,29 +33,14 @@ namespace api_test
         {
             try
             {
-                var send = new Send(TbUser.Text, TbKey.Text, TbSendWord.Text, Convert.ToInt32(TbLevel.Text), Convert.ToInt32(TbCount.Text));
-                var sendJson = JsonConvert.SerializeObject(send);
+                var sendJson = GetInfo();
                 TbSendJson.Text = sendJson;
                 try
                 {
-                    var receiveJson = SentData(TbServer.Text, sendJson);
-                    JsonSerializerSettings setting = new JsonSerializerSettings();
-                    setting.NullValueHandling = NullValueHandling.Ignore;
-                    var Receive = JsonConvert.DeserializeObject<Receive>(receiveJson, setting);
-                    TbReceiveWord.Text = Receive.Word;
-                    TbCode.Text = Receive.StatueCode.ToString();
-                    TbDescription.Text = Receive.Translate;
-                    TbSentenceCount.Text = Receive.Sentences.Count.ToString();
-                    TbReceiveJson.Text = receiveJson;
-                    if (Receive.Sentences.Count != 0)
-                    {
-                        LvSentence.ItemsSource = Receive.Sentences;
-                    }
-                    else
-                    {
-                        LvSentence.ItemsSource = new List<Sentence>();
-                    }
-                    LvSentence.UpdateLayout();
+                    var startTime = DateTime.Now;
+                    string receiveJson = "";
+                    var receive = ConnectServer(sendJson,out receiveJson);
+                    FillBox(receive,receiveJson,startTime);
                 }
                 catch (Exception exception)
                 {
@@ -66,6 +51,14 @@ namespace api_test
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private Receive ConnectServer(string sendJson,out string receiveJson)
+        {
+            receiveJson = SentData(TbServer.Text, sendJson);
+            JsonSerializerSettings setting = new JsonSerializerSettings();
+            setting.NullValueHandling = NullValueHandling.Ignore;
+            return JsonConvert.DeserializeObject<Receive>(receiveJson, setting);
         }
 
         private static string SentData(string url,string sendJson)
@@ -87,7 +80,7 @@ namespace api_test
             return Decode(result);
         }
 
-        public static string Decode(string str)
+        private static string Decode(string str)
         {
             var regex = new Regex(@"\\u(\w{4})");
 
@@ -99,6 +92,31 @@ namespace api_test
             });
 
             return result;
+        }
+
+        private string GetInfo()
+        {
+            var send = new Send(TbUser.Text, TbKey.Text, TbSendWord.Text, Convert.ToInt32(TbLevel.Text), Convert.ToInt32(TbCount.Text));
+            return JsonConvert.SerializeObject(send);
+        }
+
+        private void FillBox(Receive receive,string receiveJson,DateTime startTime)
+        {
+            LbTime.Content = (DateTime.Now - startTime).TotalMilliseconds.ToString("f0");
+            TbReceiveWord.Text = receive.Word;
+            TbCode.Text = receive.StatueCode.ToString();
+            TbDescription.Text = receive.Translate;
+            TbSentenceCount.Text = receive.Sentences.Count.ToString();
+            TbReceiveJson.Text = receiveJson;
+            if (receive.Sentences.Count != 0)
+            {
+                LvSentence.ItemsSource = receive.Sentences;
+            }
+            else
+            {
+                LvSentence.ItemsSource = new List<Sentence>();
+            }
+            LvSentence.UpdateLayout();
         }
     }
 }
