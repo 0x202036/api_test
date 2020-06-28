@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -36,7 +37,9 @@ namespace api_test
             try
             {
                 var receiveJson = SentData(TbServer.Text, sendJson);
-                var Receive = JsonConvert.DeserializeObject<Receive>(receiveJson);
+                JsonSerializerSettings setting = new JsonSerializerSettings();
+                setting.NullValueHandling = NullValueHandling.Ignore;
+                var Receive = JsonConvert.DeserializeObject<Receive>(receiveJson,setting);
                 TbReceiveWord.Text = Receive.Word;
                 TbCode.Text = Receive.StatueCode.ToString();
                 TbDescription.Text = Receive.Translate;
@@ -44,7 +47,8 @@ namespace api_test
                 TbReceiveJson.Text = receiveJson;
                 if (Receive.Sentences.Count != 0)
                 {
-                    LvSentence.DataContext = Receive.Sentences;
+                    LvSentence.ItemsSource = Receive.Sentences;
+                    LvSentence.UpdateLayout();
                 }
             }
             catch (Exception exception)
@@ -67,8 +71,22 @@ namespace api_test
             writer.Write(data, 0, data.Length);
             writer.Close();
             var response = (HttpWebResponse) webRequest.GetResponse();
-            result= new StreamReader(response.GetResponseStream(), Encoding.GetEncoding("utf-8")).ReadToEnd();
+            result = new StreamReader(response.GetResponseStream(), Encoding.GetEncoding("UTF-8")).ReadToEnd();
             response.Close();
+            return Decode(result);
+        }
+
+        public static string Decode(string str)
+        {
+            var regex = new Regex(@"\\u(\w{4})");
+
+            string result = regex.Replace(str, delegate (Match m)
+            {
+                string hexStr = m.Groups[1].Value;
+                string charStr = ((char)int.Parse(hexStr, System.Globalization.NumberStyles.HexNumber)).ToString();
+                return charStr;
+            });
+
             return result;
         }
     }

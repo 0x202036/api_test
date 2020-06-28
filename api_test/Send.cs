@@ -13,11 +13,11 @@ namespace api_test
         {
             this.UserName = userName;
             DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
-            this.Time = (DateTime.Now - startTime).TotalSeconds;
-            this.Key = CreateMD5(key + Time);
+            this.Time = Math.Round((DateTime.Now - startTime).TotalSeconds, 4);
+            this.Key = CreateMD5(key+Time);
         }
 
-        private string CreateMD5(string input)
+        private static string CreateMD5(string input)
         {
             // Use input string to calculate MD5 hash
             using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
