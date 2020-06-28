@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:api_test"
         mc:Ignorable="d"
-        Title="API测试工具" Height="700" Width="1200">
+        Title="API测试工具" Height="750" Width="1200">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -36,6 +36,10 @@
                        <TextBox Width="200" Name="TbLevel">1</TextBox>
                    </StackPanel>
                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <Label>返回数量：</Label>
+                        <TextBox Width="200" Name="TbCount">5</TextBox>
+                   </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
                        <Button Width="100" Name="BtnSubmit" Click="BtnSubmit_OnClick">上传</Button>
                    </StackPanel>
                </StackPanel>

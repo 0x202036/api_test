@@ -48,21 +48,25 @@ namespace api_test
 
     class Option
     {
-        public Option(int level)
+        public Option(int level,int count)
         {
             this.Level = level;
+            this.Count = count;
         }
 
         [JsonProperty("level")]
         public int Level { get; set; }
+
+        [JsonProperty("count")]
+        public int Count { get; set; }
     }
 
     class Send
     {
-        public Send(string userName, string key, string word, int level)
+        public Send(string userName, string key, string word, int level,int count)
         {
             this.Security = new Security(userName,key);
-            this.Option = new Option(level);
+            this.Option = new Option(level,count);
             this.Word = word;
         }
 

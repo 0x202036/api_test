@@ -31,7 +31,7 @@ namespace api_test
 
         private void BtnSubmit_OnClick(object sender, RoutedEventArgs e)
         {
-            var send = new Send(TbUser.Text,TbKey.Text,TbSendWord.Text,Convert.ToInt32(TbLevel.Text));
+            var send = new Send(TbUser.Text,TbKey.Text,TbSendWord.Text,Convert.ToInt32(TbLevel.Text), Convert.ToInt32(TbCount.Text));
             var sendJson = JsonConvert.SerializeObject(send);
             TbSendJson.Text = sendJson;
             try
